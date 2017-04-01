@@ -2,7 +2,7 @@ buildscript {
     ext.kotlin_version = '1.1.1'
 
     // define a repoConfig that we can reuse
-    repoConfig = {
+    ext.repoConfig = {
         jcenter()
         mavenCentral()
     }
