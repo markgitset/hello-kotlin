@@ -1,20 +1,26 @@
 buildscript {
     ext.kotlin_version = '1.1.1'
-    repositories {
+
+    // define a repoConfig that we can reuse
+    repoConfig = {
+        jcenter()
         mavenCentral()
     }
+
+    // use the repoConfig we defined above
+    repositories repoConfig
+
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.13"
     }
 }
 apply plugin: 'kotlin'
 apply plugin: 'application'
+apply plugin: 'org.jetbrains.dokka'
 
-// In this section you declare where to find the dependencies of your project
-repositories {
-    // Use jcenter for resolving your dependencies.
-    jcenter()
-}
+// use the repoConfig we defined above
+repositories repoConfig
 
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
@@ -27,3 +33,8 @@ dependencies {
 
 // Define the main class for the application
 mainClassName = 'hello.HelloKt'
+
+task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = "javadoc"
+    outputDirectory = "$buildDir/dokkaJavadoc"
+}
